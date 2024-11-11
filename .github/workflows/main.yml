@@ -1,25 +1,42 @@
-name: build & deploy spring app
+name: Build & Deploy Spring App
 on:
- push:
-  branches:
-  - main
-  
+  push:
+    branches:
+      - main
+
 jobs:
   build-deploy:
-   name: build & deploy spring app
-   runs-on: ubuntu-latest
-   steps:
-     - name: Checkout code
-       uses: actions/checkout@v4
-       
-     - name: setup JDK 17
-       uses: actions/setup-java@v4
-       with:
-        distribution: 'corretto'
-        java-version: 17
-        
-     - name: Unit Test
-       run: mvn test
+    name: Build & Deploy Spring App
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Setup JDK 17
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: 17
+
+      # 3. Cache Maven dependencies (accélère le build)
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # 4. Run Unit Tests
+      - name: Run Unit Tests
+        run: mvn test
+
+      # 5. Build and Package the Spring Boot Application
+      - name: Build and Package
+        run: mvn clean package -DskipTests
 
      
 
