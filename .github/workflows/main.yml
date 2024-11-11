@@ -18,8 +18,8 @@ jobs:
         distribution: 'corretto'
         java-version: 17
         
-     - name: unit test
-       run: mvn clean
+     - name: Unit Test
+       run: mvn test
 
      
 
