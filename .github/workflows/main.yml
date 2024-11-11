@@ -20,11 +20,7 @@ jobs:
         
      - name: unit test
        run: mvn -B test --file pom.xml
-       
-     - name: build the app
-       run: |
-        mvn clean
-        mvn -B package --file pom.xml
+
      
 
   		 
