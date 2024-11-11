@@ -21,14 +21,13 @@ jobs:
           distribution: 'corretto'
           java-version: 17
 
-      # 3. Cache Maven dependencies (accélère le build)
+      # 3. Cache Maven dependencies (accelerates the build)
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          restore-keys: ${{ runner.os }}-maven-
 
       # 4. Run Unit Tests
       - name: Run Unit Tests
@@ -37,9 +36,3 @@ jobs:
       # 5. Build and Package the Spring Boot Application
       - name: Build and Package
         run: mvn clean package -DskipTests
-
-     
-
-  		 
-  
-  
